@@ -19,7 +19,28 @@ class CharityProjectBase(BaseModel):
         title = 'Базовая схема проекта'
 
 
-class CharityProjectCreate(CharityProjectBase):
+class CharityProjectUpdate(CharityProjectBase):
+    """Схема проекта для обновления."""
+
+    class Config:
+        title = 'Схема проекта для обновления'
+        orm_mode = True
+        extra = Extra.forbid
+
+    @validator('name')
+    def name_cannot_be_null(cls, value: str):
+        if not value:
+            raise ValueError('Название проекта не может быть пустым!')
+        return value
+
+    @validator('description')
+    def description_cannot_be_null(cls, value: str):
+        if not value:
+            raise ValueError('Описание проекта не может быть пустым!')
+        return value
+
+
+class CharityProjectCreate(CharityProjectUpdate):
     """Схема проекта для создания."""
     name: str = Field(
         ...,
@@ -46,40 +67,3 @@ class CharityProjectDB(CharityProjectCreate):
     class Config:
         title = 'Схема проекта для получения'
         orm_mode = True
-
-
-class CharityProjectUpdate(CharityProjectBase):
-    """Схема проекта для обновления."""
-
-    class Config:
-        title = 'Схема проекта для обновления'
-        orm_mode = True
-
-    @validator('name')
-    def name_cannot_be_null(cls, value: str):
-        if not value:
-            raise ValueError('Название проекта не может быть пустым!')
-        return value
-
-    @validator('description')
-    def description_cannot_be_null(cls, value: str):
-        if not value:
-            raise ValueError('Описание проекта не может быть пустым!')
-        return value
-
-
-
-
-    # @validator('close_date')
-    # def check_close_date_is_none(cls, value: datetime):
-    #     pass
-    #     if value:
-    #         raise ValueError('Нельзя редактировать закрытый проект!')
-    #     return value
-    #
-    # @validator('full_amount')
-    # def check_full_amount_greater_than_invested(cls, value: int):
-    #     pass
-
-
-

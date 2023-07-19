@@ -133,4 +133,4 @@ dmypy.json
 
 # DB
 
-fastapi.db
+*.db

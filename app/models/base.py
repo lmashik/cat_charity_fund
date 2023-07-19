@@ -6,6 +6,8 @@ from app.core.db import Base
 
 
 class ProjectDonationBase(Base):
+    """Базовая абстрактная модель родителя
+    для моделей проекта и пожертвования."""
     __abstract__ = True
 
     full_amount = Column(Integer, nullable=False)
