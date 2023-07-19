@@ -5,7 +5,10 @@ from app.models.base import ProjectDonationBase
 
 class Donation(ProjectDonationBase):
     """Модель пожертвования."""
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(
+        Integer,
+        ForeignKey('user.id', name='fk_donation_user_id_user'),
+    )
     comment = Column(Text)
 
     def __repr__(self):
