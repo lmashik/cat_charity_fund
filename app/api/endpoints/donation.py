@@ -20,7 +20,6 @@ async def create_new_donation(
 ):
     """Создание пожертвования."""
     new_donation = await donation_crud.create(donation, session, user)
-    # print(new_donation)
     return new_donation
 
 
@@ -51,4 +50,3 @@ async def get_my_donations(
     """Получение списка своих пожертвований."""
     my_donations = await donation_crud.get_by_user(user=user, session=session)
     return my_donations
-
