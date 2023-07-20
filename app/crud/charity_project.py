@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -21,6 +21,16 @@ class CRUDCharityProject(CRUDBaseAdvanced):
             )
         )
         return db_project_id.scalars().first()
+
+    async def get_opened_projects(
+            self, session: AsyncSession
+    ) -> Optional[List[CharityProject]]:
+        db_opened_projects = await session.execute(
+            select(CharityProject).where(
+                CharityProject.fully_invested is False
+            )
+        )
+        return db_opened_projects.scalars().all()
 
 
 charity_project_crud = CRUDCharityProject(CharityProject)

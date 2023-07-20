@@ -34,6 +34,14 @@ class CRUDBase:
         await session.refresh(db_obj)
         return db_obj
 
+    # def get_sorted_not_fully_invested(self, session: AsyncSession):
+    #     objs = session.execute(
+    #         select(self.model).where(
+    #             self.model.fully_invested is False
+    #         ).order_by('create_date')
+    #     )
+    #     return objs
+
 
 class CRUDBaseAdvanced(CRUDBase):
 
