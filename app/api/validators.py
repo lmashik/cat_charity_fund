@@ -32,3 +32,46 @@ async def check_project_exists(
             detail='Проект не найден!'
         )
     return charity_project
+
+
+async def check_project_open(
+        project_id: int,
+        session: AsyncSession,
+) -> CharityProject:
+    """Проверка того, что проект еще открыт."""
+    charity_project = await charity_project_crud.get(project_id, session)
+    if charity_project.close_date:
+        raise HTTPException(
+            status_code=400,
+            detail='Закрытый проект нельзя редактировать!',
+        )
+    return charity_project
+
+
+async def check_investing_funds(
+        project_id: int,
+        obj_in_full_amount,
+        session: AsyncSession,
+) -> CharityProject:
+    """Проверка новой требуемой суммы."""
+    charity_project = await charity_project_crud.get(project_id, session)
+    if obj_in_full_amount < charity_project.invested_amount:
+        raise HTTPException(
+            status_code=400,
+            detail='Требуемая сумма проекта не может быть меньше вложенной!',
+        )
+    return charity_project
+
+
+async def check_invested_amount(
+        project_id: int,
+        session: AsyncSession,
+) -> CharityProject:
+    """Проверка того, что в проект уже поступили некоторые средства."""
+    charity_project = await charity_project_crud.get(project_id, session)
+    if charity_project.invested_amount > 0:
+        raise HTTPException(
+            status_code=400,
+            detail='В проект были внесены средства, не подлежит удалению!',
+        )
+    return charity_project
