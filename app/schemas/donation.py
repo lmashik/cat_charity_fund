@@ -19,6 +19,12 @@ class DonationCreate(DonationBase):
     class Config:
         extra = Extra.forbid
         title = 'Схема пожертвования для создания'
+        schema_extra = {
+            'example': {
+                'comment': 'От всей души',
+                'full_amount': 450
+            }
+        }
 
 
 class DonationDB(DonationBase):
@@ -29,6 +35,14 @@ class DonationDB(DonationBase):
     class Config:
         title = 'Схема пожертвования для получения'
         orm_mode = True
+        schema_extra = {
+            'example': {
+                'comment': 'От всей души',
+                'full_amount': 450,
+                'id': 2,
+                'create_date': '2023-07-21T23:54:05.177Z'
+            }
+        }
 
 
 class DonationDBSuper(DonationDB):
@@ -41,3 +55,14 @@ class DonationDBSuper(DonationDB):
     class Config:
         title = 'Схема пожертвования для получения (advanced)'
         orm_mode = True
+        schema_extra = {
+            'example': {
+                'comment': 'От всей души',
+                'full_amount': 450,
+                'id': 2,
+                'create_date': '2023-07-21T23:54:05.177Z',
+                'user_id': 1,
+                'invested_amount': 200,
+                'fully_invested': 0
+            }
+        }
