@@ -1,2 +1,2 @@
 class DuplicateException(Exception):
-    pass
+    """Исключение, выбрасываемое при повторной записи в базу."""
