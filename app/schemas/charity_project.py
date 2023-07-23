@@ -3,14 +3,18 @@ from typing import Optional
 
 from pydantic import BaseModel, Extra, Field, PositiveInt, validator
 
+from app.constants import (
+    DEFAULT_INVESTED_AMOUNT, NAME_MAX_LENGTH, NAME_MIN_LENGTH
+)
+
 
 class CharityProjectBase(BaseModel):
     """Базовое схема объекта проекта."""
     name: Optional[str] = Field(
         None,
         title='Название',
-        min_length=1,
-        max_length=100,
+        min_length=NAME_MIN_LENGTH,
+        max_length=NAME_MAX_LENGTH,
     )
     description: Optional[str] = Field(None, title='Описание')
     full_amount: Optional[PositiveInt] = Field(None, title='Требуемая сумма')
@@ -52,8 +56,8 @@ class CharityProjectCreate(CharityProjectUpdate):
     name: str = Field(
         ...,
         title='Название',
-        min_length=1,
-        max_length=100,
+        min_length=NAME_MIN_LENGTH,
+        max_length=NAME_MAX_LENGTH,
     )
     description: str = Field(..., title='Описание')
     full_amount: PositiveInt = Field(..., title='Требуемая сумма')
@@ -66,7 +70,10 @@ class CharityProjectCreate(CharityProjectUpdate):
 class CharityProjectDB(CharityProjectCreate):
     """Схема проекта для получения."""
     id: int = Field(..., title='Порядковый номер')
-    invested_amount: int = Field(0, title='Сколько пожертвовано')
+    invested_amount: int = Field(
+        DEFAULT_INVESTED_AMOUNT,
+        title='Сколько пожертвовано',
+    )
     fully_invested: bool = Field(False, title='Собрана нужная сумма')
     create_date: datetime = Field(..., title='Дата открытия проекта')
     close_date: Optional[datetime] = Field(None, title='Дата закрытия проекта')

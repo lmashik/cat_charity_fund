@@ -3,6 +3,8 @@ from typing import Optional
 
 from pydantic import BaseModel, Extra, Field, PositiveInt
 
+from app.constants import DEFAULT_INVESTED_AMOUNT
+
 
 class DonationBase(BaseModel):
     """Базовая схема объекта пожертвования."""
@@ -48,7 +50,10 @@ class DonationDB(DonationBase):
 class DonationDBSuper(DonationDB):
     """Схема пожертвования для получения из базы суперпользователем."""
     user_id: Optional[int] = Field(None, title='ID пользователя')
-    invested_amount: int = Field(0, title='Сколько вложено')
+    invested_amount: int = Field(
+        DEFAULT_INVESTED_AMOUNT,
+        title='Сколько вложено',
+    )
     fully_invested: bool = Field(False, title='Вложена полная сумма')
     close_date: Optional[datetime] = Field(None, title='Дата вложения')
 

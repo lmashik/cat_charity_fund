@@ -15,6 +15,7 @@ class CRUDDonation(CRUDBase):
             user: User,
             session: AsyncSession,
     ) -> Optional[List[Donation]]:
+        """Поиск пожертвований по id пользователя."""
         user_donations = await session.execute(
             select(Donation).where(Donation.user_id == user.id)
         )
