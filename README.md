@@ -153,4 +153,4 @@ _HTTP 1.1 200 OK_
 ## Автор проекта
 
 Лапикова Мария Дмитриевна  
-mashik.mikhaylova@yandex.ru
+mashik_p@mail.ru
